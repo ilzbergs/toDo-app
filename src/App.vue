@@ -1,21 +1,18 @@
 <template>
   <div class="flex flex-col items-center h-screen mt-36">
-     <NewToDo />
+    <NewToDo />
   </div>
 </template>
 
-
 <script>
-
 import NewToDo from './components/NewToDo.vue';
 
 export default {
   name: 'App',
   components: {
-    NewToDo
+    NewToDo,
   }
-}
-
+};
 </script>
 
 

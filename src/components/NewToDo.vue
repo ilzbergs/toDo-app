@@ -19,22 +19,20 @@
                     <button class="btn btn-success btn-outline btn-xs ml-3" @click="saveEdit">OK</button>
                 </div>
                 <div v-else class="flex mt-4 w-full text-center items-center">
-                    <input type="checkbox" class="checkbox checkbox-info checkbox-xs" :checked="toDo.done" @change="toggleDone(index)" />
+                    <input type="checkbox" class="checkbox checkbox-info checkbox-xs" :checked="toDo.done"
+                        @change="toggleDone(index)" />
                     <div class="flex flex-col pl-6 items-center w-full md:flex-row md:justify-between">
                         <span :class="{ done: toDo.done }">{{ toDo.name }}</span>
                         <div class="flex md:ml-4">
                             <button class="btn btn-success btn-outline btn-xs mr-2" @click="editMode = index">Edit</button>
                             <button class="btn btn-error btn-outline btn-xs" @click="deleteToDo(index)">Delete</button>
                         </div>
-
                     </div>
-
                 </div>
             </li>
         </ul>
     </div>
 </template>
-
 
 <script>
 import { uuid } from 'vue-uuid';
@@ -54,8 +52,8 @@ export default {
             this.toDos = JSON.parse(storedTodos);
         }
     },
-    methods: {
 
+    methods: {
         toogler(editing) {
             this.editing = editing;
             this.toDo = '';
@@ -80,24 +78,26 @@ export default {
                 this.saveToDos();
             }
         },
+
         deleteToDo(index) {
             this.toDos.splice(index, 1);
             this.saveToDos();
         },
+
         saveToDos() {
             localStorage.setItem('todos', JSON.stringify(this.toDos));
         },
+
         saveEdit() {
             this.editMode = null;
             this.saveToDos();
         },
-          toggleDone(index) {
+
+        toggleDone(index) {
             this.toDos[index].done = !this.toDos[index].done;
             this.saveToDos();
         },
-        
     },
-
 };
 </script>
 
