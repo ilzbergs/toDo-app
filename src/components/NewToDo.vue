@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col bg-slate-50 w-5/6 text-center rounded-lg p-11">
+    <div class="flex flex-col bg-slate-50 w-5/6 text-center rounded-lg p-11 xl:w-4/6">
         <h1 class="text-4xl mb-9">My To Do list!</h1>
         <div class="flex my-8 justify-around flex-col md:flex-row">
             <p class="mb-3" v-if="toDos.length === 0">Currently you have no any new ToDo </p>
@@ -11,7 +11,7 @@
                 @keyup.enter="addToDo">
             <button class="btn btn-success btn-xs mt-4 md:h-full md:mt-0 " @click="addToDo">ADD</button>
         </div>
-        <ul class="flex flex-col justify-center lg:w-3/5 m-auto">
+        <ul class="flex flex-col justify-center lg:w-2/5 m-auto">
             <li class="flex justify-center text-center md:justify-between" v-for="(toDo, index) in toDos" :key="index">
                 <div v-if="editMode === index">
                     <input class="input input-bordered h-full mt-3" type="text" v-model="toDo.name" @keyup.enter="saveEdit"
@@ -19,7 +19,7 @@
                     <button class="btn btn-success btn-outline btn-xs ml-3" @click="saveEdit">OK</button>
                 </div>
                 <div v-else class="flex mt-4 w-full text-center items-center">
-                    <input type="checkbox" class="checkbox checkbox-info checkbox-xs" v-model="toDo.done" />
+                    <input type="checkbox" class="checkbox checkbox-info checkbox-xs" :checked="toDo.done" @change="toggleDone(index)" />
                     <div class="flex flex-col pl-6 items-center w-full md:flex-row md:justify-between">
                         <span :class="{ done: toDo.done }">{{ toDo.name }}</span>
                         <div class="flex md:ml-4">
@@ -37,6 +37,7 @@
 
 
 <script>
+import { uuid } from 'vue-uuid';
 export default {
     name: 'AddToDo',
     data() {
@@ -60,6 +61,7 @@ export default {
             this.toDo = '';
             this.visible = false;
         },
+
         addToDo() {
             if (this.toDo.length === 0) {
                 return;
@@ -71,7 +73,8 @@ export default {
                 this.toDos.push({
                     name: this.toDo,
                     done: false,
-                    id: Math.random(),
+                    uuid: uuid.v1(),
+
                 });
                 this.toDo = '';
                 this.saveToDos();
@@ -88,7 +91,13 @@ export default {
             this.editMode = null;
             this.saveToDos();
         },
+          toggleDone(index) {
+            this.toDos[index].done = !this.toDos[index].done;
+            this.saveToDos();
+        },
+        
     },
+
 };
 </script>
 

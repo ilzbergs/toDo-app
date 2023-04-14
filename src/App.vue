@@ -2,7 +2,6 @@
   <div class="flex flex-col items-center h-screen mt-36">
      <NewToDo />
   </div>
- 
 </template>
 
 
