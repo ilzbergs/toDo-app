@@ -16,7 +16,7 @@
                 <div v-if="editMode === index">
                     <input class="input input-bordered h-full mt-3" type="text" v-model="toDo.name" @keyup.enter="saveEdit"
                         @blur="saveEdit" />
-                    <button class="btn btn-error btn-outline btn-xs ml-3" @click="cancelEdit">Cancel</button>
+                    <button class="btn btn-success btn-outline btn-xs ml-3" @click="saveEdit">OK</button>
                 </div>
                 <div v-else class="flex mt-4 w-full text-center items-center">
                     <input type="checkbox" class="checkbox checkbox-info checkbox-xs" v-model="toDo.done" />
@@ -84,15 +84,9 @@ export default {
         saveToDos() {
             localStorage.setItem('todos', JSON.stringify(this.toDos));
         },
-        enterEditMode(index) {
-            this.editMode = index;
-        },
         saveEdit() {
             this.editMode = null;
             this.saveToDos();
-        },
-        cancelEdit() {
-            this.editMode = null;
         },
     },
 };
