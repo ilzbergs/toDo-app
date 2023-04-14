@@ -1,5 +1,5 @@
 <template>
-    <h1>My To Do list!</h1>
+    <h1 class="">My To Do list!</h1>
     <div>
         <p v-if="toDos.length === 0">Currently you have no any new ToDo </p>
         <button v-if='editing' @click="toogler(false)">Cancel</button>
@@ -12,15 +12,15 @@
     </div>
     <div>
         <ul v-for="(toDo, index) in toDos" :key="index">
-          <div v-if="editMode === index">
-              <input type="text" v-model="toDo.name" @keyup.enter="saveEdit" @blur="saveEdit" />
-              <button @click="cancelEdit">Cancel</button>
+            <div v-if="editMode === index">
+                <input type="text" v-model="toDo.name" @keyup.enter="saveEdit" @blur="saveEdit" />
+                <button @click="cancelEdit">Cancel</button>
             </div>
             <div v-else>
-              <input type="checkbox" v-model="toDo.done" />
-              <span :class="{ done: toDo.done }">{{ toDo.name }}</span>
-              <button @click="editMode = index">Edit</button>
-              <button @click="deleteToDo(index)">Delete</button>
+                <input type="checkbox" v-model="toDo.done" />
+                <span :class="{ done: toDo.done }">{{ toDo.name }}</span>
+                <button @click="editMode = index">Edit</button>
+                <button @click="deleteToDo(index)">Delete</button>
             </div>
         </ul>
     </div>
@@ -54,7 +54,6 @@ export default {
             this.toDo = '';
             this.visible = false;
         },
-
         addToDo() {
             if (this.toDo.length === 0) {
                 return;
@@ -65,7 +64,7 @@ export default {
             else {
                 this.toDos.push({
                     name: this.toDo,
-                    done:false,
+                    done: false,
                     id: Math.random(),
                 });
                 this.toDo = '';
@@ -87,8 +86,11 @@ export default {
             this.editMode = null;
         },
     },
-
-
 };
-
 </script>
+
+<style>
+.done {
+    text-decoration: line-through;
+}
+</style>
