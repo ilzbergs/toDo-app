@@ -1,27 +1,36 @@
 <template>
-    <h1 class="">My To Do list!</h1>
-    <div>
-        <p v-if="toDos.length === 0">Currently you have no any new ToDo </p>
-        <button v-if='editing' @click="toogler(false)">Cancel</button>
-        <button v-else='' @click="toogler(true)">New ToDo</button>
-    </div>
-    <div v-if="editing">
-        <label for="addToDo"></label>
-        <input type="text" id="addToDo" placeholder="Add To Do" v-model="toDo" @keyup.enter="addToDo">
-        <button @click="addToDo">ADD</button>
-    </div>
-    <div>
-        <ul v-for="(toDo, index) in toDos" :key="index">
-            <div v-if="editMode === index">
-                <input type="text" v-model="toDo.name" @keyup.enter="saveEdit" @blur="saveEdit" />
-                <button @click="cancelEdit">Cancel</button>
-            </div>
-            <div v-else>
-                <input type="checkbox" v-model="toDo.done" />
-                <span :class="{ done: toDo.done }">{{ toDo.name }}</span>
-                <button @click="editMode = index">Edit</button>
-                <button @click="deleteToDo(index)">Delete</button>
-            </div>
+    <div class="flex flex-col bg-slate-50 w-5/6 text-center rounded-lg p-11">
+        <h1 class="text-4xl mb-9">My To Do list!</h1>
+        <div class="flex my-8 justify-around flex-col md:flex-row">
+            <p class="mb-3" v-if="toDos.length === 0">Currently you have no any new ToDo </p>
+            <button class="btn btn-error btn-xs" v-if='editing' @click="toogler(false)">Cancel</button>
+            <button class="btn btn-primary btn-xs" v-else='' @click="toogler(true)">New ToDo</button>
+        </div>
+        <div class="flex flex-col md:flex-row justify-center" v-if="editing">
+            <input class="flex input w-full max-w-xs" type="text" id="addToDo" placeholder="Add To Do" v-model="toDo"
+                @keyup.enter="addToDo">
+            <button class="btn btn-success btn-xs mt-4 md:h-full md:mt-0 " @click="addToDo">ADD</button>
+        </div>
+        <ul class="flex flex-col justify-center lg:w-3/5 m-auto">
+            <li class="flex justify-center text-center md:justify-between" v-for="(toDo, index) in toDos" :key="index">
+                <div v-if="editMode === index">
+                    <input class="input input-bordered h-full mt-3" type="text" v-model="toDo.name" @keyup.enter="saveEdit"
+                        @blur="saveEdit" />
+                    <button class="btn btn-error btn-outline btn-xs ml-3" @click="cancelEdit">Cancel</button>
+                </div>
+                <div v-else class="flex mt-4 w-full text-center items-center">
+                    <input type="checkbox" class="checkbox checkbox-info checkbox-xs" v-model="toDo.done" />
+                    <div class="flex flex-col pl-6 items-center w-full md:flex-row md:justify-between">
+                        <span :class="{ done: toDo.done }">{{ toDo.name }}</span>
+                        <div class="flex md:ml-4">
+                            <button class="btn btn-success btn-outline btn-xs mr-2" @click="editMode = index">Edit</button>
+                            <button class="btn btn-error btn-outline btn-xs" @click="deleteToDo(index)">Delete</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </li>
         </ul>
     </div>
 </template>
@@ -29,7 +38,6 @@
 
 <script>
 export default {
-
     name: 'AddToDo',
     data() {
         return {
@@ -46,9 +54,7 @@ export default {
         }
     },
     methods: {
-        saveToDos() {
-            localStorage.setItem('todos', JSON.stringify(this.toDos));
-        },
+
         toogler(editing) {
             this.editing = editing;
             this.toDo = '';
@@ -75,12 +81,15 @@ export default {
             this.toDos.splice(index, 1);
             this.saveToDos();
         },
+        saveToDos() {
+            localStorage.setItem('todos', JSON.stringify(this.toDos));
+        },
         enterEditMode(index) {
             this.editMode = index;
         },
         saveEdit() {
             this.editMode = null;
-            this.saveTodos();
+            this.saveToDos();
         },
         cancelEdit() {
             this.editMode = null;

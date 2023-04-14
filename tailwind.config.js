@@ -1,12 +1,15 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   purge: ['./index.html', './src/**/*.{vue,js,ts,jsx,tsx}'],
-  darkMode: false,
+
   theme: {
-    extend: {},
+  screens:{
+      md: "768px",
+      lg: "1024px",
+  }
   },
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require("daisyui")],
 };
